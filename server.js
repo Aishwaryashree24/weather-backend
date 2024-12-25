@@ -5,9 +5,6 @@ import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Use CORS to allow requests from your frontend
-app.use(cors());
-
 const corsOptions = {
   origin: "https://aishwaryashree24.github.io/weather-app/", // Replace with your actual GitHub Pages URL
 };
@@ -23,7 +20,7 @@ app.get("/weather", async (req, res) => {
   // Fetch weather data using OpenWeatherMap API
   const apiKey = process.env.API_KEY; // Secure API key from environment variable
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
+  //https://api.openweathermap.org/data/2.5/weather?q=London&appid=0e30f7cfa72aef3d4214d2be5951e4ef&units=metric
   try {
     console.log("Fetching weather data from:", apiUrl); // Log the full URL
     const response = await fetch(apiUrl);
