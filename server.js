@@ -1,6 +1,6 @@
-const express = require("express");
-const fetch = require("node-fetch");
-const cors = require("cors");
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +14,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-// Handle weather requests
 app.get("/weather", async (req, res) => {
   const city = req.query.city;
   if (!city) {
@@ -24,22 +23,27 @@ app.get("/weather", async (req, res) => {
   // Fetch weather data using OpenWeatherMap API
   const apiKey = process.env.API_KEY; // Secure API key from environment variable
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  console.log("fetching weather data from: ", apiUrl);
 
   try {
+    console.log("Fetching weather data from:", apiUrl); // Log the full URL
     const response = await fetch(apiUrl);
-    const data = await response.json();
 
-    if (response.ok) {
-      res.json(data);
-    } else {
-      res.status(response.status).json(data);
+    if (!response.ok) {
+      // Log the error response if the OpenWeatherMap API fails
+      const errorData = await response.json();
+      console.error("Error from OpenWeatherMap API:", errorData);
+      return res.status(response.status).json(errorData); // Send the error to the client
     }
+
+    const data = await response.json();
+    console.log("Weather data:", data); // Log the data received
+    res.json(data); // Send the weather data to the frontend
   } catch (error) {
-    console.error("Error fetching weather data: ", error);
+    console.error("Error fetching weather data:", error); // Log the error
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+
 
 // Start the server
 app.listen(PORT, () => {
