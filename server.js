@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 3000;
 // Use CORS to allow requests from your frontend
 app.use(cors());
 
+const corsOptions = {
+  origin: "https://aishwaryashree24.github.io/weather-app/", // Replace with your actual GitHub Pages URL
+};
+app.use(cors(corsOptions));
+
+
 // Handle weather requests
 app.get("/weather", async (req, res) => {
   const city = req.query.city;
