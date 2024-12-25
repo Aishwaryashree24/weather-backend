@@ -24,6 +24,7 @@ app.get("/weather", async (req, res) => {
   // Fetch weather data using OpenWeatherMap API
   const apiKey = process.env.API_KEY; // Secure API key from environment variable
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  console.log("fetching weather data from: ", apiUrl);
 
   try {
     const response = await fetch(apiUrl);
@@ -35,6 +36,7 @@ app.get("/weather", async (req, res) => {
       res.status(response.status).json(data);
     }
   } catch (error) {
+    console.error("Error fetching weather data: ", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
