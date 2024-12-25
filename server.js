@@ -6,7 +6,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: "https://aishwaryashree24.github.io/weather-app/", // Replace with your actual GitHub Pages URL
+  origin: "https://aishwaryashree24.github.io",
+  //origin: "https://aishwaryashree24.github.io/weather-app/", // Replace with your actual GitHub Pages URL
 };
 app.use(cors(corsOptions));
 
